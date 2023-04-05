@@ -33,15 +33,24 @@ fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + "kiwi")
 # write your own comment - what does this do?
 #streamlit.dataframe(fruityvice_normalized)
 
+
+def get_fruityvice_data  (this_fruit_choice):
+    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + this_fruit_choice)
+    fruityvice_normalised=pandas.json_normalize(fruitvice_response.json())
+    return fruityvice_normalised
+  
+
+
 streamlit.header('Fruitvice Fruit Advice"!')
 try:
   fruit_choice = streamlit.text_input('What fruit would you like information about?')
   if not fruit_choice:
     streamlit.error("Please select a fruit to get information.")
   else:
-    fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
-    fruityvice_normalised=pandas.json_normalize(fruitvice_response.json())
-    streamlit.dataframe(fruityvice_normalised)
+    back_from_function=get_fruityvice_data(fruit_choice)
+    streamlit.dataframe(back_from_function)
+
+   # streamlit.dataframe(fruityvice_normalised)
 except URLError as e:
   streamlit.error()
 
