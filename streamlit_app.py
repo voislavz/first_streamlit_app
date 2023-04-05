@@ -44,9 +44,21 @@ streamlit.text("Hello from Snowflake:")
 streamlit.text(my_data_row)
 
 streamlit.header('Fruitvice Fruit Advice"!')
-fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
-streamlit.write('The user entered ', fruit_choice)
+try:
+  fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
+if not fruit_choice:
+  streamlit.error("Please select a fruit to get information.")
+else:
+  fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+  fruityvice_normalised=pandas.json_normalize(fruitvice_response.json())
+  streamlit.dataframe(fruityvice_normalised)
+except URLError as e:
+  streamlit.error()
+  
+  
+  
+#streamlit.write('The user entered ', fruit_choice)
 
-add_my_fruit=streamlit.text_input('What fruit would you like ?')
+#add_my_fruit=streamlit.text_input('What fruit would you like ?')
 
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
+
