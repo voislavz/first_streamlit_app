@@ -50,7 +50,7 @@ try:
     back_from_function=get_fruityvice_data(fruit_choice)
     streamlit.dataframe(back_from_function)
 
-   # streamlit.dataframe(fruityvice_normalised)
+    streamlit.dataframe(fruityvice_normalised)
 except URLError as e:
   streamlit.error()
 
